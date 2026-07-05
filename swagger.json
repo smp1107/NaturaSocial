@@ -1,0 +1,119 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "NaturaSocial API",
+    "version": "1.0.0",
+    "description": "API REST para usuarios, productos, publicaciones, comentarios, reacciones, seguidores y notificaciones."
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Servidor actual"
+    }
+  ],
+  "paths": {
+    "/usuarios/login": {
+      "post": {
+        "summary": "Iniciar sesion",
+        "tags": ["Usuarios"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["correo", "password"],
+                "properties": {
+                  "correo": { "type": "string", "example": "usuario@example.com" },
+                  "password": { "type": "string", "example": "Clave123" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Inicio de sesion correcto" },
+          "401": { "description": "Credenciales invalidas" }
+        }
+      }
+    },
+    "/usuarios": { "$ref": "#/components/pathItems/collection" },
+    "/usuarios/{id}": { "$ref": "#/components/pathItems/item" },
+    "/productos": { "$ref": "#/components/pathItems/collection" },
+    "/productos/{id}": { "$ref": "#/components/pathItems/item" },
+    "/publicaciones": { "$ref": "#/components/pathItems/collection" },
+    "/publicaciones/{id}": { "$ref": "#/components/pathItems/item" },
+    "/comentarios": { "$ref": "#/components/pathItems/collection" },
+    "/comentarios/{id}": { "$ref": "#/components/pathItems/item" },
+    "/reacciones": { "$ref": "#/components/pathItems/collection" },
+    "/reacciones/{id}": { "$ref": "#/components/pathItems/item" },
+    "/seguidores": { "$ref": "#/components/pathItems/collection" },
+    "/seguidores/{id}": { "$ref": "#/components/pathItems/item" },
+    "/notificaciones": { "$ref": "#/components/pathItems/collection" },
+    "/notificaciones/{id}": { "$ref": "#/components/pathItems/item" }
+  },
+  "components": {
+    "pathItems": {
+      "collection": {
+        "get": {
+          "summary": "Listar registros",
+          "responses": {
+            "200": { "description": "Lista de registros" }
+          }
+        },
+        "post": {
+          "summary": "Crear registro",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": { "description": "Registro creado" }
+          }
+        }
+      },
+      "item": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "put": {
+          "summary": "Actualizar registro",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": { "description": "Registro actualizado" },
+            "404": { "description": "Registro no encontrado" }
+          }
+        },
+        "delete": {
+          "summary": "Eliminar registro",
+          "responses": {
+            "200": { "description": "Registro eliminado" },
+            "404": { "description": "Registro no encontrado" }
+          }
+        }
+      }
+    }
+  }
+}
