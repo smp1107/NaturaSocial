@@ -12,10 +12,24 @@ const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:5173,http:
     .map((origin) => origin.trim())
     .filter(Boolean);
 
+function isTrustedDeploymentOrigin(origin) {
+    try {
+        const { protocol, hostname } = new URL(origin);
+
+        return protocol === 'https:' && (
+            hostname.endsWith('.onrender.com') ||
+            hostname.endsWith('.web.app') ||
+            hostname.endsWith('.firebaseapp.com')
+        );
+    } catch (error) {
+        return false;
+    }
+}
+
 app.use((req, res, next) => {
     cors({
         origin(origin, callback) {
-            if (!origin || allowedOrigins.includes(origin)) {
+            if (!origin || allowedOrigins.includes(origin) || isTrustedDeploymentOrigin(origin)) {
                 return callback(null, true);
             }
 
