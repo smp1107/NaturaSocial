@@ -12,13 +12,46 @@ const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:5173,http:
     .map((origin) => origin.trim())
     .filter(Boolean);
 
-app.use(cors({
+app.use((req, res, next) => {
+    cors({
+        origin(origin, callback) {
+            if (!origin || allowedOrigins.includes(origin)) {
+                return callback(null, true);
+            }
+
+            try {
+                const requestHost = req.get('host');
+                const originHost = new URL(origin).host;
+
+                if (requestHost && originHost === requestHost) {
+                    return callback(null, true);
+                }
+            } catch (error) {
+                return callback(new Error('Origen no permitido por CORS'));
+            }
+
+            return callback(new Error('Origen no permitido por CORS'));
+        }
+    })(req, res, next);
+});
+
+app.use((error, req, res, next) => {
+    if (error.message === 'Origen no permitido por CORS') {
+        return res.status(403).json({
+            error: error.message
+        });
+    }
+
+    return next(error);
+});
+
+app.use('/api-docs', cors({
     origin(origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {
             return callback(null, true);
         }
 
-        return callback(new Error('Origen no permitido por CORS'));
+        return callback(null, true);
     }
 }));
 app.use(express.json());
