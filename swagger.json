@@ -11,6 +11,15 @@
       "description": "Servidor actual"
     }
   ],
+  "tags": [
+    { "name": "Usuarios", "description": "Registro, login y gestion de usuarios" },
+    { "name": "Productos", "description": "Catalogo de productos naturales" },
+    { "name": "Publicaciones", "description": "Contenido compartido en la comunidad" },
+    { "name": "Comentarios", "description": "Comentarios sobre publicaciones" },
+    { "name": "Reacciones", "description": "Interacciones sociales sobre publicaciones" },
+    { "name": "Seguidores", "description": "Relaciones de seguimiento entre usuarios" },
+    { "name": "Notificaciones", "description": "Avisos generados por la actividad de la plataforma" }
+  ],
   "paths": {
     "/usuarios/login": {
       "post": {
@@ -37,80 +46,88 @@
         }
       }
     },
-    "/usuarios": { "$ref": "#/components/pathItems/collection" },
-    "/usuarios/{id}": { "$ref": "#/components/pathItems/item" },
-    "/productos": { "$ref": "#/components/pathItems/collection" },
-    "/productos/{id}": { "$ref": "#/components/pathItems/item" },
-    "/publicaciones": { "$ref": "#/components/pathItems/collection" },
-    "/publicaciones/{id}": { "$ref": "#/components/pathItems/item" },
-    "/comentarios": { "$ref": "#/components/pathItems/collection" },
-    "/comentarios/{id}": { "$ref": "#/components/pathItems/item" },
-    "/reacciones": { "$ref": "#/components/pathItems/collection" },
-    "/reacciones/{id}": { "$ref": "#/components/pathItems/item" },
-    "/seguidores": { "$ref": "#/components/pathItems/collection" },
-    "/seguidores/{id}": { "$ref": "#/components/pathItems/item" },
-    "/notificaciones": { "$ref": "#/components/pathItems/collection" },
-    "/notificaciones/{id}": { "$ref": "#/components/pathItems/item" }
+    "/usuarios": {
+      "get": { "tags": ["Usuarios"], "summary": "Listar usuarios", "responses": { "200": { "description": "Lista de usuarios" } } },
+      "post": { "tags": ["Usuarios"], "summary": "Crear usuario", "requestBody": { "$ref": "#/components/requestBodies/JsonBody" }, "responses": { "201": { "description": "Usuario creado" } } }
+    },
+    "/usuarios/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/Id" }],
+      "put": { "tags": ["Usuarios"], "summary": "Actualizar usuario", "requestBody": { "$ref": "#/components/requestBodies/JsonBody" }, "responses": { "200": { "description": "Usuario actualizado" }, "404": { "description": "Usuario no encontrado" } } },
+      "delete": { "tags": ["Usuarios"], "summary": "Eliminar usuario", "responses": { "200": { "description": "Usuario eliminado" }, "404": { "description": "Usuario no encontrado" } } }
+    },
+    "/productos": {
+      "get": { "tags": ["Productos"], "summary": "Listar productos", "responses": { "200": { "description": "Lista de productos" } } },
+      "post": { "tags": ["Productos"], "summary": "Crear producto", "requestBody": { "$ref": "#/components/requestBodies/JsonBody" }, "responses": { "201": { "description": "Producto creado" } } }
+    },
+    "/productos/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/Id" }],
+      "put": { "tags": ["Productos"], "summary": "Actualizar producto", "requestBody": { "$ref": "#/components/requestBodies/JsonBody" }, "responses": { "200": { "description": "Producto actualizado" }, "404": { "description": "Producto no encontrado" } } },
+      "delete": { "tags": ["Productos"], "summary": "Eliminar producto", "responses": { "200": { "description": "Producto eliminado" }, "404": { "description": "Producto no encontrado" } } }
+    },
+    "/publicaciones": {
+      "get": { "tags": ["Publicaciones"], "summary": "Listar publicaciones", "responses": { "200": { "description": "Lista de publicaciones" } } },
+      "post": { "tags": ["Publicaciones"], "summary": "Crear publicacion", "requestBody": { "$ref": "#/components/requestBodies/JsonBody" }, "responses": { "201": { "description": "Publicacion creada" } } }
+    },
+    "/publicaciones/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/Id" }],
+      "put": { "tags": ["Publicaciones"], "summary": "Actualizar publicacion", "requestBody": { "$ref": "#/components/requestBodies/JsonBody" }, "responses": { "200": { "description": "Publicacion actualizada" }, "404": { "description": "Publicacion no encontrada" } } },
+      "delete": { "tags": ["Publicaciones"], "summary": "Eliminar publicacion", "responses": { "200": { "description": "Publicacion eliminada" }, "404": { "description": "Publicacion no encontrada" } } }
+    },
+    "/comentarios": {
+      "get": { "tags": ["Comentarios"], "summary": "Listar comentarios", "responses": { "200": { "description": "Lista de comentarios" } } },
+      "post": { "tags": ["Comentarios"], "summary": "Crear comentario", "requestBody": { "$ref": "#/components/requestBodies/JsonBody" }, "responses": { "201": { "description": "Comentario creado" } } }
+    },
+    "/comentarios/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/Id" }],
+      "put": { "tags": ["Comentarios"], "summary": "Actualizar comentario", "requestBody": { "$ref": "#/components/requestBodies/JsonBody" }, "responses": { "200": { "description": "Comentario actualizado" }, "404": { "description": "Comentario no encontrado" } } },
+      "delete": { "tags": ["Comentarios"], "summary": "Eliminar comentario", "responses": { "200": { "description": "Comentario eliminado" }, "404": { "description": "Comentario no encontrado" } } }
+    },
+    "/reacciones": {
+      "get": { "tags": ["Reacciones"], "summary": "Listar reacciones", "responses": { "200": { "description": "Lista de reacciones" } } },
+      "post": { "tags": ["Reacciones"], "summary": "Crear reaccion", "requestBody": { "$ref": "#/components/requestBodies/JsonBody" }, "responses": { "201": { "description": "Reaccion creada" } } }
+    },
+    "/reacciones/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/Id" }],
+      "put": { "tags": ["Reacciones"], "summary": "Actualizar reaccion", "requestBody": { "$ref": "#/components/requestBodies/JsonBody" }, "responses": { "200": { "description": "Reaccion actualizada" }, "404": { "description": "Reaccion no encontrada" } } },
+      "delete": { "tags": ["Reacciones"], "summary": "Eliminar reaccion", "responses": { "200": { "description": "Reaccion eliminada" }, "404": { "description": "Reaccion no encontrada" } } }
+    },
+    "/seguidores": {
+      "get": { "tags": ["Seguidores"], "summary": "Listar seguidores", "responses": { "200": { "description": "Lista de relaciones de seguimiento" } } },
+      "post": { "tags": ["Seguidores"], "summary": "Crear relacion de seguimiento", "requestBody": { "$ref": "#/components/requestBodies/JsonBody" }, "responses": { "201": { "description": "Relacion creada" } } }
+    },
+    "/seguidores/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/Id" }],
+      "put": { "tags": ["Seguidores"], "summary": "Actualizar relacion de seguimiento", "requestBody": { "$ref": "#/components/requestBodies/JsonBody" }, "responses": { "200": { "description": "Relacion actualizada" }, "404": { "description": "Relacion no encontrada" } } },
+      "delete": { "tags": ["Seguidores"], "summary": "Eliminar relacion de seguimiento", "responses": { "200": { "description": "Relacion eliminada" }, "404": { "description": "Relacion no encontrada" } } }
+    },
+    "/notificaciones": {
+      "get": { "tags": ["Notificaciones"], "summary": "Listar notificaciones", "responses": { "200": { "description": "Lista de notificaciones" } } },
+      "post": { "tags": ["Notificaciones"], "summary": "Crear notificacion", "requestBody": { "$ref": "#/components/requestBodies/JsonBody" }, "responses": { "201": { "description": "Notificacion creada" } } }
+    },
+    "/notificaciones/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/Id" }],
+      "put": { "tags": ["Notificaciones"], "summary": "Actualizar notificacion", "requestBody": { "$ref": "#/components/requestBodies/JsonBody" }, "responses": { "200": { "description": "Notificacion actualizada" }, "404": { "description": "Notificacion no encontrada" } } },
+      "delete": { "tags": ["Notificaciones"], "summary": "Eliminar notificacion", "responses": { "200": { "description": "Notificacion eliminada" }, "404": { "description": "Notificacion no encontrada" } } }
+    }
   },
   "components": {
-    "pathItems": {
-      "collection": {
-        "get": {
-          "summary": "Listar registros",
-          "responses": {
-            "200": { "description": "Lista de registros" }
-          }
-        },
-        "post": {
-          "summary": "Crear registro",
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true
-                }
-              }
+    "parameters": {
+      "Id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" }
+      }
+    },
+    "requestBodies": {
+      "JsonBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "additionalProperties": true
             }
-          },
-          "responses": {
-            "201": { "description": "Registro creado" }
-          }
-        }
-      },
-      "item": {
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
-        ],
-        "put": {
-          "summary": "Actualizar registro",
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": { "description": "Registro actualizado" },
-            "404": { "description": "Registro no encontrado" }
-          }
-        },
-        "delete": {
-          "summary": "Eliminar registro",
-          "responses": {
-            "200": { "description": "Registro eliminado" },
-            "404": { "description": "Registro no encontrado" }
           }
         }
       }
